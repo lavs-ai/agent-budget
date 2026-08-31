@@ -122,6 +122,15 @@ Because calling Claude to decide whether to call Claude burns the exact budget y
 * **`config/pricing.yaml` ships placeholder numbers.** Update `input\_per\_mtok`/`output\_per\_mtok`/`unit\_cost\_usd` to match your actual plan before relying on the dollar figures.
 * **Single-user by design (v0).** The ledger is a local file; it doesn't know about other developers' usage. See "Scaling this" above for the team path.
 
+## Data and validation notice
+Agent Budget does not use or collect employer billing data, proprietary
+source code, private prompts, or confidential usage reports.
+Cost estimates are based on public pricing information, configurable
+assumptions, and synthetic test scenarios. Actual provider charges and
+organizational credit consumption may differ.
+Always verify estimates against the provider's current documentation and
+your organization's policies.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

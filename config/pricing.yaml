@@ -1,0 +1,69 @@
+# ==========================================================================
+# agent-budget pricing config
+# --------------------------------------------------------------------------
+# EDIT THIS FILE to match your actual plan. Prices/multipliers change often -
+# this repo ships placeholder values, not live prices. Treat it as the one
+# file you keep in sync with your provider's pricing page.
+#
+# Two billing models are supported:
+#   1. "token"      -> pay per input/output million-tokens (Anthropic/OpenAI direct API)
+#   2. "multiplier" -> pay in "premium requests" / credits per call, scaled by
+#                       a multiplier (GitHub Copilot agent-mode style)
+# ==========================================================================
+
+providers:
+  claude_api:
+    billing: token
+    tiers:
+      LOW:
+        model: claude-haiku-4-5
+        input_per_mtok: 1.00
+        output_per_mtok: 5.00
+      MEDIUM:
+        model: claude-sonnet-5
+        input_per_mtok: 3.00
+        output_per_mtok: 15.00
+      HIGH:
+        model: claude-opus-5
+        input_per_mtok: 15.00
+        output_per_mtok: 75.00
+
+  copilot_agent_mode:
+    billing: multiplier
+    # Copilot doesn't charge $/token to the dev - it burns "premium requests"
+    # against your org's allocation. Set unit_cost_usd to (your $300 pack) /
+    # (premium requests included in the pack) so the tool can still show $.
+    unit_cost_usd: 0.04
+    tiers:
+      LOW:
+        model: gpt-4.1 / gpt-5-mini (low reasoning)
+        multiplier: 0.33
+      MEDIUM:
+        model: claude-sonnet-4.6 (agent mode, default reasoning)
+        multiplier: 1
+      HIGH:
+        model: claude-opus / gpt-5 (high reasoning, extended thinking)
+        multiplier: 10
+
+  openai_api:
+    billing: token
+    tiers:
+      LOW:
+        model: gpt-5-mini
+        input_per_mtok: 0.25
+        output_per_mtok: 2.00
+      MEDIUM:
+        model: gpt-5
+        input_per_mtok: 1.25
+        output_per_mtok: 10.00
+      HIGH:
+        model: gpt-5-pro
+        input_per_mtok: 15.00
+        output_per_mtok: 120.00
+
+# Default output/input token ratio used to estimate cost when the user
+# hasn't run the prompt yet (agent-mode responses tend to be output-heavy
+# because of tool calls + generated code, hence 2.5x default).
+estimation:
+  chars_per_token: 4
+  default_output_input_ratio: 2.5

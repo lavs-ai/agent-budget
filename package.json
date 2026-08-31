@@ -1,0 +1,23 @@
+{
+  "name": "agent-budget",
+  "version": "0.2.0",
+  "description": "Classify AI coding prompts by complexity, recommend the cheapest model tier that can solve them, and track burn-rate against a fixed monthly credit/dollar budget (Copilot agent mode, Claude, OpenAI, etc).",
+  "type": "module",
+  "bin": {
+    "agent-budget": "./bin/agent-budget.js"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "js-yaml": "^4.1.0",
+    "chalk": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "keywords": ["ai", "llm", "copilot", "claude", "cost", "budget", "finops", "agent-mode"]
+}

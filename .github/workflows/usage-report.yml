@@ -1,21 +1,29 @@
 name: agent-budget usage report
 
 on:
-  schedule:
-    - cron: '0 9 * * *'   # daily 9am UTC
-  workflow_dispatch: {}
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   report:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Initialise demo budget
+        run: node bin/agent-budget.js init --unknown --days 30
+
       - name: Print budget status
         run: node bin/agent-budget.js status
-      # Extend this: pull each dev's usage.json from an artifact/cache store
-      # (S3, a private gist, or a tiny KV) and aggregate into one team report
-      # once you move past solo/local usage. See README > "Scaling this".
